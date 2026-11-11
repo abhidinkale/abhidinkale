@@ -1,77 +1,47 @@
-# ABHI DINKALE
-`systems / local-first / ambient-compute`
+# Abhi Dinkale
 
-```
-  ____  ____   ___ _____ ___  _   _ 
- |  _ \|  _ \ / _ \_   _/ _ \| \ | |
- | |_) | |_) | | | || || | | |  \| |  [ clinical os ]
- |  __/|  _ <| |_| || || |_| | |\  |  [ status: build active ]
- |_|   |_| \_\\___/ |_| \___/|_| \_|  [ origin: local-first ]
-```
+Building **Proton** — a clinical copilot where AI proposes and the physician attests.
 
-> building local-first software that doesn't die when the hospital wi-fi drops.
-> obsessed with ambient compute, sub-millisecond compose rendering, and sandboxed runtimes.
+[Validation Suite](https://github.com/abhidinkale/proton/blob/main/docs/VALIDATION.md) • [Known Issues & Tech Debt](https://github.com/abhidinkale/proton/blob/main/docs/KNOWN_ISSUES.md) • [Interactive Preview](https://github.com/abhidinkale/proton-trailer)
 
 ---
 
-### // ACTIVE BUILDS
+### What Works Today (Proton)
+Proton is an AI-assisted clinical workstation built around physician attestation and deterministic safety verification:
+- **Safety-Gated Clinical Notes**: Real-time ambient dialogue capture and structured SOAP drafting. AI proposals carry explicit provenance badges until reviewed, edited, or attested by the physician.
+- **Deterministic Clinical Verification**: Rule-based safety engine that strictly blocks invalid prescriptions (missing dosage, frequency, duration) and flags cross-reactive allergy conflicts prior to submission.
+- **FHIR R4 Persistence**: Encounter notes, active conditions, and care plans are mapped directly into standard Medplum / FHIR R4 resources.
+- **Offline-First Android Patient App**: Mobile companion with local SQLite/Room storage, OS alarm-driven background sync, and clinic link-code pairing.
 
-```
-repo                   core stack               what it actually is
-─────────────────────  ───────────────────────  ──────────────────────────────────────────────
-proton                 kotlin / compose / fhir  doctor workstation that listens & writes notes
-y3k-lockdown-browser   rust / pledge / sandbox  air-gapped exam runtime with JA3 anti-fingerprint
-obsedian-research-os   python / hnsw / louvain  knowledge graph OS that clusters research notes
-daily-selfie-app       kotlin / spring-physics  timelapse camera with zero-jank fluid physics
-project-arc            python / agentic-copilot clinical diagnostic assistance & workflow engine
-proton-site-marketing  react / vite / motion    high-contrast motion landing showcase & tokens
-```
+> **Synthetic Data Notice**: Proton is tested and validated exclusively against synthetic patient cohorts. Production deployment with Protected Health Information (PHI) requires enterprise BAAs, tenant isolation, and production KMS encryption.
 
----
-
-### // HOW PROTON WORKS (IN REVERSE)
-
-Most clinical software is an enterprise web form from 2004 that doctors hate typing into.
-Proton runs locally on the clinician's machine:
-
-```
-[room audio] ──> whisper acoustic ──> structured intent ──> fhir r4 bundle ──> encrypted local db
-                      │                       │                    │
-                 16kHz stream            vad filtered        hl7 compliant
-                 on-device INT4          zero-latency        local sqlcipher
-```
-
-- **0ms network reliance**: All acoustic transcription runs on-device via LiteRT quantized models.
-- **Zero-knowledge**: The patient conversation never leaves the exam room unencrypted.
-- **Biometric signoff**: Cryptographic `CryptoObject` hardware token signature on encounter completion.
+### Roadmap
+- **On-Device Acoustic Transcription**: Quantized local models (moving beyond cloud AI gateways).
+- **Hardware-Backed Encryption**: SQLCipher local storage encryption for disconnected clinic devices.
+- **Degraded Local Network Mesh**: Resilient offline sync for rural clinics with intermittent connectivity.
 
 ---
 
-### // THE STACK (NO BUZZWORDS)
-
-```kotlin
-// what i actually touch every day:
-val core = mapOf(
-    "languages"   to listOf("Kotlin", "Rust", "TypeScript", "Python"),
-    "mobile/ui"   to listOf("Jetpack Compose", "MVI", "Custom Layout Nodes", "Skiko"),
-    "on-device"   to listOf("LiteRT / TF Lite", "Whisper Small INT4", "HNSW Indexing"),
-    "security"    to listOf("Android KeyStore", "SQLCipher AES-256", "OAuth2 PKCE"),
-    "storage"     to listOf("Room", "SQLite WAL", "HL7 FHIR R4 Bundles")
-)
-```
+### Stack
+- **Mobile**: Kotlin, Jetpack Compose, Room, WorkManager, Coroutines & Flow
+- **Web**: TypeScript, React, Tailwind CSS, Vite
+- **Backend & Data**: Node.js, Express, PostgreSQL, Medplum / FHIR R4
+- **Verification**: Deterministic test suites (185+ unit tests, automated CI validation)
 
 ---
 
-### // PRINCIPLES
-
-1. **If it needs internet to show a button, it's broken.** Local-first by default.
-2. **Speed is respect.** 60fps is a bug if the display runs at 120Hz. Zero recomposition overhead.
-3. **No black-box data exhaust.** Patient data belongs in hardware-backed storage, not training corpora.
+### Public Repositories
+- [**proton**](https://github.com/abhidinkale/proton) — Clinical copilot where AI proposes and the physician attests.
+- [**proton-trailer**](https://github.com/abhidinkale/proton-trailer) — Interactive preview and walkthrough of the clinical workstation.
+- [**developer-journal**](https://github.com/abhidinkale/developer-journal) — Architecture decision records (ADRs), daily engineering logs, and reflections.
+- [**daily-selfie-app**](https://github.com/abhidinkale/daily-selfie-app) — Timelapse camera with fluid mass-spring-damper physics in React Native.
+- [**project-arc**](https://github.com/abhidinkale/project-arc) — Clinical agent workflow prototype for note drafting, triage, and task execution.
 
 ---
 
-```
-contact: github issue / pull request / x.com: @mysticgecko
-gpg:     hardware-backed keystore
-status:  compiling
-```
+### Pilot Plan
+Running a focused **30-day pilot across 1–3 community clinics** using synthetic test cohorts to validate physician attestation speed, workflow integration, and deterministic safety guardrails.
+
+---
+
+**Contact**: [abhidinkale@gmail.com](mailto:abhidinkale@gmail.com) • [X / Twitter (@mysticgecko)](https://x.com/mysticgecko)
